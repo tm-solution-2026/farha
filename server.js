@@ -74,23 +74,23 @@ const PORT = process.env.PORT || 3000;
 
 const startServer = async () => {
   try {
-    // Test database connection
-    const dbConnected = await testConnection();
-    
-    if (!dbConnected) {
-      console.error('❌ Failed to connect to database. Server will not start.');
-      process.exit(1);
-    }
 
-    // Start listening
-    app.listen(PORT, () => {
+    // start server FIRST
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server is running on port ${PORT}`);
       console.log(`📝 Environment: ${process.env.NODE_ENV || 'development'}`);
-      console.log(`🔗 API Base URL: http://localhost:${PORT}/api`);
+      console.log(`🔗 API Base URL: /api`);
     });
+
+    // then test database connection
+    const dbConnected = await testConnection();
+
+    if (!dbConnected) {
+      console.error('⚠️ Database connection failed, server will keep running.');
+    }
+
   } catch (error) {
     console.error('❌ Error starting server:', error);
-    process.exit(1);
   }
 };
 
