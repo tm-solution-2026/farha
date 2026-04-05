@@ -34,7 +34,7 @@ const sendOTP = async (req, res, next) => {
   try {
     const { identifier } = req.body;
     const result = await authService.sendOTP(identifier);
-    return sendSuccess(res, result.message, { code: result.code }); // Remove code in production
+    return sendSuccess(res, result.message, { code: result.code }); //! Remove code in production
   } catch (error) {
     next(error);
   }
